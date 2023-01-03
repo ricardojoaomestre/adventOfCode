@@ -1,0 +1,14 @@
+{
+  "name": "adventofcode",
+  "version": "1.0.0",
+  "description": "Coding exercises brought by [adventofcode.com](https://adventofcode.com).",
+  "scripts": {
+    "start": "node",
+    "day01": "node -- day01",
+    "day02": "node -- day02"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ricardojoaomestre/adventOfCode.git"
+  }
+}
