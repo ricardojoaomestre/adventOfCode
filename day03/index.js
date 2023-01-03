@@ -26,17 +26,41 @@ function findCommon(str1, str2) {
   return str1.split("").find((char) => str2.indexOf(char) !== -1);
 }
 
-async function main() {
+function findBadge(str1, str2, str3) {
+  return str1
+    .split("")
+    .find((char) => str2.indexOf(char) !== -1 && str3.indexOf(char) !== -1);
+}
+
+async function main(version = 1) {
   const content = await readInput(FILE_INPUT);
   const ruckstacks = content.split("\n");
   let sum = 0;
-  ruckstacks.forEach((ruckstack) => {
-    const [p1, p2] = breakEven(ruckstack);
-    const common = findCommon(p1, p2);
-    const priority = getPriority(common);
-    sum += priority;
-  });
-  console.log(sum);
+  if (version === 1) {
+    ruckstacks.forEach((ruckstack) => {
+      const [p1, p2] = breakEven(ruckstack);
+      const common = findCommon(p1, p2);
+      const priority = getPriority(common);
+      sum += priority;
+    });
+    console.log(sum);
+  } else {
+    for (let i = 0; i < ruckstacks.length; i += 3) {
+      const p1 = ruckstacks[i];
+      const p2 = ruckstacks[i + 1];
+      const p3 = ruckstacks[i + 2];
+      const badge = findBadge(p1, p2, p3);
+      const priority = getPriority(badge);
+      sum += priority;
+      console.log(
+        `Group ${
+          i / 3 + 1
+        }\n${p1}\n${p2}\n${p3}\nBadge: ${badge} - ${priority}\nTotal: ${sum}`
+      );
+    }
+    console.log(sum);
+  }
 }
 
-main();
+// main(1);
+main(2);
