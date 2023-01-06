@@ -80,7 +80,7 @@ function renderStacks(stacks, stream = null) {
 function pickCrates(amount, stack) {
   const crates = [...stack];
   const modifiedStack = crates.splice(amount);
-  return [crates.reverse(), modifiedStack];
+  return [crates, modifiedStack];
 }
 
 function dropCrates(crates, stack) {
@@ -89,15 +89,16 @@ function dropCrates(crates, stack) {
   return temp;
 }
 
-function moveCrates(amount, from, to, stacks) {
+function moveCrates(amount, from, to, stacks, craneVersion = 9000) {
   const temp = [...stacks];
   const [crates, updStack] = pickCrates(amount, temp[from - 1]);
   temp[from - 1] = updStack;
+  if (craneVersion === 9000) crates.reverse();
   temp[to - 1] = dropCrates(crates, temp[to - 1]);
   return temp;
 }
 
-async function main(useStream = false) {
+async function main(version = 1, useStream = false) {
   const content = await readInput(FILE_INPUT);
   const stream = useStream
     ? getWriteFileStream(FILE_OUTPUT, { flag: "a" })
@@ -109,10 +110,11 @@ async function main(useStream = false) {
   moves.forEach((move) => {
     const [amount, from, to] = move;
     write(`move ${amount} from ${from} to ${to}`, stream);
-    stacks = moveCrates(amount, from, to, stacks);
+    stacks = moveCrates(amount, from, to, stacks, version === 1 ? 9000 : 9001);
     renderStacks(stacks, stream);
   });
   console.log(stacks.map((stack) => stack[0]).join(""));
 }
 
-main(true);
+main(1, true);
+main(2, true);
