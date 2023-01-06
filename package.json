@@ -8,7 +8,8 @@
     "day02": "node -- day02",
     "day03": "node -- day03",
     "day04": "node -- day04",
-    "day05": "rm -f ./day05/output.txt && node -- day05"
+    "day05": "rm -f ./day05/output.txt && node -- day05",
+    "day06": "node -- day06"
   },
   "repository": {
     "type": "git",
