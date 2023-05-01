@@ -138,5 +138,5 @@ async function main(version = 1) {
   }
 }
 
-// main(1).then((response) => console.log(response));
+main(1).then((response) => console.log(response));
 main(2).then((response) => console.log(response));
